@@ -3,6 +3,8 @@ import { useWebSocket } from '../../context/WebSocketContext'
 import GameNameInput from '../../components/form/GameNameInput'
 import { useMutation } from '@tanstack/react-query'
 import API from '../../api'
+import HoldingGamePageLayout from '../../components/layout/HoldingGamePageLayout'
+import { useNavigate } from 'react-router-dom'
 
 function StartGame() {
   const { clientId } = useWebSocket()
@@ -11,6 +13,7 @@ function StartGame() {
   >('name-input')
 
   const [gameCode, setGameCode] = React.useState('')
+  const navigate = useNavigate()
 
   //enter host name
   const mutation = useMutation({
@@ -34,19 +37,26 @@ function StartGame() {
     }
   }, [mutation.isPending])
 
+  const onBackClick = () => {
+    navigate('/')
+  }
   return (
-    <div>
-      <h6>Start Game</h6>
-      {gameState === 'name-input' ? (
-        <GameNameInput onSubmit={handleSubmit} />
-      ) : gameState === 'display-room-code' ? (
-        <>Room code is {gameCode}</>
-      ) : (
-        <>
-          <div>loading...</div>
-        </>
-      )}
-    </div>
+    <HoldingGamePageLayout
+      title={'Create new session'}
+      onBackClick={onBackClick}
+    >
+      <div>
+        {gameState === 'name-input' ? (
+          <GameNameInput onSubmit={handleSubmit} />
+        ) : gameState === 'display-room-code' ? (
+          <p>Room code is {gameCode}</p>
+        ) : (
+          <>
+            <div>loading...</div>
+          </>
+        )}
+      </div>
+    </HoldingGamePageLayout>
   )
 }
 

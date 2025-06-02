@@ -15,11 +15,18 @@ const LandingPage = () => {
     navigate('/join')
   }
   return (
-    <div>
-      <h2>WebSocket Test</h2>
-      <div>
-        <button onClick={handleClickStart}>start</button>
-        <button onClick={handleClickJoin}>join</button>
+    <div className="h-screen w-screen flex items-center justify-center bg-radial-gradient">
+      <div className="p-2">
+        <h2 className="font-inika text-8xl text-white font-bold">Choy!</h2>
+        <div className="flex-col mt-8 w-full space-y-4">
+          <button className="w-full" onClick={handleClickStart}>
+            Create new session
+          </button>
+
+          <button className="w-full" onClick={handleClickJoin}>
+            Join session
+          </button>
+        </div>
       </div>
     </div>
   )
